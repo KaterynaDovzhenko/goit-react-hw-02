@@ -16,7 +16,6 @@ export default function App() {
       bad: 0,
     };
   });
-  const [isFeedback, setIsFeedback] = useState(false);
 
   const { good, neutral, bad } = feedback;
   const totalFeedback = good + neutral + bad;
@@ -29,16 +28,6 @@ export default function App() {
     }));
   };
 
-  const checkTotalFeedback = () => {
-    if (totalFeedback > 0) {
-      setIsFeedback(true);
-    }
-  };
-
-  useEffect(() => {
-    checkTotalFeedback();
-  }, [feedback]);
-
   useEffect(() => {
     localStorage.setItem("state", JSON.stringify(feedback));
   }, [feedback]);
@@ -49,7 +38,6 @@ export default function App() {
       neutral: 0,
       bad: 0,
     });
-    setIsFeedback(false);
   };
 
   return (
@@ -60,7 +48,7 @@ export default function App() {
         onReset={resetFeedback}
         onSum={totalFeedback}
       ></Options>
-      {isFeedback ? (
+      {totalFeedback > 0 ? (
         <Feedback
           feedbackItem={feedback}
           totalFeedbackItem={totalFeedback}
